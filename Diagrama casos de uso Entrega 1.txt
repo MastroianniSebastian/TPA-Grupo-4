@@ -1,0 +1,21 @@
+@startuml
+
+actor Administrador
+actor ProveedorDeServicio
+actor Usuario
+
+Administrador -right-> (Dar de alta Servicio)
+Administrador -left-> (Dar de baja Servicio)
+Administrador -up-> (Modificar Servicio)
+
+ProveedorDeServicio-right->(Dar de alta Servicio Publico)
+ProveedorDeServicio-up->(Asignar administrador a servicio publico)
+
+
+Usuario -right-> (Ingresar a Comunidadad)
+Usuario -right-> (Loggearse)
+Usuario -right-> (Registrarse)
+
+
+
+@enduml

@@ -1,0 +1,108 @@
+@startuml
+class RolAdministrador extends Rol{
+  public darDeAltaUnServicio(ServicioPublico servicioPublico);
+  public darDeBajaUnServicio(ServicioPublico servicioPublico);
+  public modificaraUnServicio(ServicioPublico servicioPublico);
+
+}
+
+class RolUsuario extends Rol{
+  public ingresarAComunidad(Comunidad comunidad);
+}
+
+class Rol{
+
+}
+
+class ServicioPublico{
+  TipoServicioPublico TipoServicioPublico;
+  List<Linea> lineas;
+}
+
+Enum TipoServicioPublico{
+  SUBTERRANEO
+  FERROCARRIL
+}
+
+class Linea{
+  String nombre;
+  Estacion estacionOrigen;
+  Estacion estacionDestino;
+  List<Estacion> estaciones;
+  //La idea es para una linea dar de alta la linea de ida y otra para la de vuelta
+}
+
+class Estacion{
+  String nombre;
+  Ubicacion ubicacionGeografica;
+  List<Servicio> servicios;
+}
+
+class Ubicacion{
+  float x;
+  float y;
+}
+
+Abstract Servicio{
+  EstadoActual estadoActual;
+}
+
+class ServicioDeBanio extends Servicio{
+
+}
+
+class ServicioDeEscaleraMecanica extends Servicio{
+
+}
+
+class ServicioDeAscensores extends Servicio{
+
+}
+
+Enum EstadoActual{
+  DISPONIBLE,
+  NO_DISPONIBLE
+  //Puede cambiar a patron state
+}
+
+class Usuario{
+  String nombre;
+  String apellido;
+  String email;
+  List<Rol> roles;
+  List<Comunidad> comunidadesPertenecientes;
+}
+
+class Comunidad{
+  List<Usuario> usuarios; //????? esta bien tener relacion en ambas entidades???
+  List<InteresEnComun> interes;
+  List<UsuarioAdministrador> administradores;
+  
+  //Quien administra las comunidades???
+}
+
+class Interes{
+  //???????????
+}
+
+class RolProveedorDePlataforma extends Rol{
+  public crearUsuarioAdministrador(ServicioPublico servicio, Usuario usuario);
+  public crearServicioPublico(ServicioPublico servicioPublic);
+  
+}
+
+
+ServicioPublico-->"1"TipoServicioPublico
+ServicioPublico-->"*"Linea
+Linea-->"*"Estacion
+Estacion-->"1"Ubicacion
+RolProveedorDePlataforma..>ServicioPublico
+RolProveedorDePlataforma..>Usuario
+RolAdministrador..>Servicio
+RolUsuario..>Comunidad
+Servicio-->"1"EstadoActual
+Comunidad-->"*"Usuario
+Usuario-->"*"Comunidad
+Usuario-->"*"Rol
+Comunidad-->"*"Interes
+@enduml

@@ -1,0 +1,83 @@
+@startuml
+class ServicioPublico{
+  TipoServicioPublico TipoServicioPublico;
+  List<Linea> lineas;
+}
+
+Enum TipoServicioPublico{
+  SUBTERRANEO
+  FERROCARRIL
+}
+
+class Linea{
+  String nombre;
+  Estacion estacionOrigen;
+  Estacion estacionDestino;
+  List<Estacion> estaciones;
+  //La idea es para una linea dar de alta la linea de ida y otra para la de vuelta
+}
+
+class Estacion{
+  String nombre;
+  Ubicacion ubicacionGeografica;
+  List<Servicio> servicios;
+}
+
+class Ubicacion{
+  float x;
+  float y;
+}
+
+Abstract Servicio{
+  EstadoActual estadoActual;
+}
+
+class ServicioDeBanio extends Servicio{
+
+}
+
+class ServicioDeEscaleraMecanica extends Servicio{
+
+}
+
+class ServicioDeAscensores extends Servicio{
+
+}
+
+Enum EstadoActual{
+//Prestacion tambien conocida
+  DISPONIBLE,
+  NO_DISPONIBLE
+  //Puede cambiar a patron state
+}
+
+class Usuario{
+  String nombre;
+  String apellido;
+  String email;
+  
+  +public ingresarAComunidad(Comunidad comunidad);
+}
+
+class Comunidad{
+  List<Administrador> administradores;
+  List<Miembro> miembros;
+  
+  +public agregarInteres(Interes unInteres);
+}
+
+class ProveedorDePlataforma {
+  +public designarUsuarioAdministrador(Comunidad comunidad, Usuario usuarioAdministrador);
+}
+
+
+ServicioPublico-->"1"TipoServicioPublico
+ServicioPublico-->"*"Linea
+Linea-->"*"Estacion
+Estacion-->"1"Ubicacion
+Servicio-->"1"EstadoActual
+Estacion-->"*"Servicio
+Usuario..>Comunidad : use
+Comunidad..>Servicio
+ProveedorDePlataforma..>Usuario : use
+@enduml

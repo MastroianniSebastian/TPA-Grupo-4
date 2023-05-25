@@ -1,0 +1,114 @@
+@startuml
+
+enum Material{
+  ALGODON,
+  LANA,
+  etc..
+}
+
+class Prenda{
+  Color colorPrincipal;
+  Color colorSecundario;
+  Trama trama;
+  Material material;
+  TipoDePrenda tipoDePrenda;
+  Integer temperaturaMaximaAdecuada;
+  Categoria categoria();
+}
+
+class TipoDePrenda{
+  Categoria categoria();
+}
+
+enum Categoria{
+  PARTE_SUPERIOR,
+  CALZADO,
+  PARTE_INFERIOR,
+  ACCESORIOS
+}
+
+class Color{
+  int rojo;
+  int verde;
+  int azul;
+}
+
+enum Trama{
+  LISA,
+  RAYADA,
+  etc...
+}
+
+class Borrador{
+  TipoDePrenda tipo;
+  Material material;
+  Color colorPrincipal;
+  Color colorSecundario;
+  Trama trama;
+
+  especificarTipo(TipoDePrenda);
+  especificarMaterial(Material);
+  especificarColorPrimario(Color);
+  especificarColorSecundario(Color);
+  especificarTrama(Trama);
+  crearPrenda();
+}
+
+class Administrador{
+  + setServicioClimatico(ServicioClimatico);
+}
+
+class Usuario{
+  List<Prenda> prendas;
+  Integer edad;
+  MotorSugerencias motorSugerencias;
+  ServicioClimatico servicioClimatico;//Inyeccion de dependencias, VARIABLE GLOBAL?
+}
+interface MotorSugerencias{
+  + generarSugerencias(Usuario);
+  + generarSugerencias(Usuario, ServicioClimatico);
+}
+class MotorSugerenciaBasico implements MotorSugerencias{
+  + generarSugerencias(Usuario);
+  + generarSugerencias(Usuario, ServicioClimatico);
+}
+class MotorSugerenciasSegunFormalidad implements MotorSugerencias{
+  + generarSugerencias(Usuario);
+  + generarSugerencias(Usuario, ServicioClimatico);
+}
+
+interface ServicioClimatico{
+  Integer obtenerTemperaturaActualEnLaCiudad(String city);
+  //Cada clase que la implemente deberia ser singleton?
+}
+
+class ServicioAccuWeather implements ServicioClimatico{
+  Integer obtenerTemperaturaActualEnLaCiudad(String city);
+}
+
+class ServicioGoogle implements ServicioClimatico{
+  //A modo de ejemplo
+  Integer obtenerTemperaturaActualEnLaCiudad(String city);
+}
+
+interface AccuWeatherAPI{
+  List<Map<String,Object>> getWeather(String city);
+}
+
+
+Prenda-->Color
+Prenda-->Color
+Prenda-->Material
+Prenda-->TipoDePrenda
+Prenda-->Trama
+TipoDePrenda-->Categoria
+Borrador..>Prenda
+Usuario-->"*"Prenda
+Usuario-->MotorSugerencias
+Usuario-->ServicioClimatico
+MotorSugerencias..>Usuario
+Administrador..>ServicioClimatico
+ServicioAccuWeather..>AccuWeatherAPI
+
+
+@enduml

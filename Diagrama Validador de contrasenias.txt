@@ -1,0 +1,24 @@
+@startuml
+
+class ValidadorDeContrasenia{
+  List<Validador> validaciones;
+  public Boolean validarContrasenia(String contrasenia);
+}
+interface Validador{
+  public Boolean validar(String contrasenia);
+}
+
+class DiezMilPeoresContrasenias implements Validador{
+}
+
+class LongitudMinima implements Validador{
+
+}
+
+class RepeticionDeCaracteres implements Validador{
+  
+}
+
+ValidadorDeContrasenia-->"*"Validador
+
+@enduml
